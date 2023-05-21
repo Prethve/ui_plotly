@@ -12,7 +12,6 @@ app.layout = html.Div([
     Input(component_id='input_name', component_property='value')
 )
 def changing_output(input_name):
-    print('test...')
     return f'Text:{input_name}' # This returns the component property 'children' in Output.
 
 
