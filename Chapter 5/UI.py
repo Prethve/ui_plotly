@@ -14,6 +14,9 @@ app.layout = html.Div([
             html.A('World Happiness Report',
                    href='https://worldhappiness.report/ed/2023/',
                    target='_blank')]),
+            dcc.RadioItems(id='region_select',
+                           options=happiness['region'].unique(),
+                           value='North America'),
             dcc.Dropdown(options=(happiness['country']).unique(), 
                          value='United States', 
                          id='country_input'),
@@ -26,6 +29,18 @@ app.layout = html.Div([
             dcc.Graph(id='happiness_graph'),
             html.Div(id='happiness_mean', children='')
 ])
+
+@app.callback(
+        Output(component_id='country_input', component_property='options'),
+        Output(component_id='country_input', component_property='value'),
+        Input(component_id='region_select', component_property='value')
+)
+def region_update(region_input):
+    filtered_happiness = happiness[happiness['region'] == region_input]
+    country_options = filtered_happiness['country'].unique()
+
+    return country_options, country_options[0]
+
 
 @app.callback(
     Output(component_id='happiness_graph', component_property='figure'),
