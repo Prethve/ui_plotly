@@ -23,21 +23,24 @@ app.layout = html.Div([
                                'happiness_score':'Happiness Score'
                            },
                            value='happiness_rank'),
-            dcc.Graph(id='happiness_graph')
+            dcc.Graph(id='happiness_graph'),
+            html.Div(id='happiness_mean', children='')
 ])
 
 @app.callback(
     Output(component_id='happiness_graph', component_property='figure'),
+    Output(component_id='happiness_mean', component_property='children'),
     Input(component_id='country_input',component_property='value'),
     Input(component_id='radio_options', component_property='value')
 )
 def update_graph(selected_country, selected_option):
     filtered_happiness = happiness[happiness['country'] == selected_country]
+    country_mean = filtered_happiness[selected_option].mean()
     line_fig = px.line(filtered_happiness,
                        x='year',
                        y=selected_option,
                        title=f'{selected_option} in {selected_country}')
-    return line_fig
+    return line_fig, f'The {selected_option} of {selected_country} is {country_mean}'
 
 if __name__ == '__main__':
     app.run_server(debug=True)
