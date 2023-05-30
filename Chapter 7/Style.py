@@ -5,7 +5,7 @@ import dash_bootstrap_components as dbc
 
 soccer_players = pd.read_csv('/Users/deevprethve/Documents/Coding/Plotly Dash/training_files/Python-Interactive-Dashboards-with-Plotly-Dash/fifa_soccer_players.csv')
 
-app = Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = Dash(external_stylesheets=[dbc.themes.CERULEAN])
 
 app.layout = html.Div([
     html.H1('Soccer Players Dashboard'),
@@ -13,7 +13,7 @@ app.layout = html.Div([
         dbc.Col(
                 html.P(['Source: ',
                     html.A('Sofifa',
-                            href= '',
+                            href= 'https://sofifa.com',
                             target='_blank')
                         ])
                 ),
